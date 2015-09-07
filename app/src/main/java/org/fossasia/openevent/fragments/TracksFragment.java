@@ -47,6 +47,7 @@ public class TracksFragment extends Fragment implements SearchView.OnQueryTextLi
     private List<Track> mTracks;
 
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         setHasOptionsMenu(true);

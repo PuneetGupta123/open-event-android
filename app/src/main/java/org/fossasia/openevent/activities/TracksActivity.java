@@ -41,7 +41,8 @@ public class TracksActivity extends AppCompatActivity implements SearchView.OnQu
     private Track current;
     private List<Session> mSessions;
     private RecyclerView sessionsRecyclerView;
-
+    CollapsingToolbarLayout collapsingToolbar ;
+    int f=0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,8 +53,9 @@ public class TracksActivity extends AppCompatActivity implements SearchView.OnQu
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         loadImage();
-        CollapsingToolbarLayout collapsingToolbar =
-                (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
+
+        collapsingToolbar =(CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
+        //setCollapsingToolbarName(0);
         collapsingToolbar.setTitle(track);
         sessionsRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         mSessions = dbSingleton.getSessionbyTracksname(track);
@@ -87,6 +89,18 @@ public class TracksActivity extends AppCompatActivity implements SearchView.OnQu
             }
         });
     }
+    public void setCollapsingToolbarName(int f)
+    {
+        if(f==1)
+        {
+            String s =" ";
+            collapsingToolbar.setTitle(s);
+        }
+        else
+        {
+            collapsingToolbar.setTitle(track);
+        }
+    }
 
     private void loadImage() {
         try {
@@ -109,6 +123,7 @@ public class TracksActivity extends AppCompatActivity implements SearchView.OnQu
                 finish();
                 return true;
             case R.id.action_search_sessions:
+
 
 //            case R.id.share_tracks:
 //                //TODO: Add the real webapp links here
@@ -135,13 +150,18 @@ public class TracksActivity extends AppCompatActivity implements SearchView.OnQu
 
     @Override
     public boolean onQueryTextSubmit(String query) {
-
+        f=1;
+        setCollapsingToolbarName(f);
         return false;
     }
 
+
     @Override
     public boolean onQueryTextChange(String query) {
+        f=1;
+        setCollapsingToolbarName(f);
         DbSingleton dbSingleton = DbSingleton.getInstance();
+
 
         mSessions = dbSingleton.getSessionbyTracksname(track);
         final List<Session> filteredModelList = filter(mSessions, query);
